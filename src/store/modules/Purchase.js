@@ -12,9 +12,7 @@ const mutations = {
         state.topData = data
     },
     RECEIVE_WATERFALLDATA(state, data) {
-        console.log(state.waterfallData)
         state.waterfallData = data
-        console.log(state.waterfallData)
     }
 }
 const actions = {
@@ -26,7 +24,6 @@ const actions = {
     },
     async getWaterfallData({ commit }, page) {
         const result = await reqWaterfallData(page)
-        console.log(result)
         if (result.code == '200') {
             commit('RECEIVE_WATERFALLDATA', result.data)
         }

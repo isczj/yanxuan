@@ -3,7 +3,7 @@ import App from './App.vue'
 import vue from 'vue'
 import router from './router'
 import store from './store'
-import { Button, Tabbar, TabbarItem, Icon, Swipe, SwipeItem, Sidebar, SidebarItem  } from 'vant';
+import { Button, Tabbar,Tag ,Loading , Lazyload ,TabbarItem, Icon, Swipe, SwipeItem, Sidebar, SidebarItem  } from 'vant';
 import * as API from './ajax/index'
 import './mock/mockServer'
 
@@ -17,6 +17,9 @@ vue.use(Swipe)
 vue.use(SwipeItem)
 vue.use(Sidebar)
 vue.use(SidebarItem)
+vue.use(Tag)
+vue.use(Loading)
+vue.use(Lazyload)
 Vue.config.productionTip = false
 Vue.prototype.$API = API
 

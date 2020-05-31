@@ -3,13 +3,14 @@ import Home from '../pages/Home'
 import Purchase from '../pages/Purchase'
 import ShopCar from '../pages/ShopCar'
 import Self from '../pages/Self'
-import Details from '../pages/details'
+import Search from '../pages/search'
+import SearchValue from '../pages/search/SearchValue'
 
 
 export default [
     // 主页
     {
-        path: '/',
+        path: '/home/:id?',
         name: '/',
         component: Home
     },
@@ -34,10 +35,19 @@ export default [
         name: 'category',
         component: Category
     },
-    // 点击主页nav上面分类后的详情
     {
-        path: '/details/:id?',
-        name: 'details',
-        component: Details
+        path: '/search',
+        name: 'search',
+        component: Search
+    },
+    {
+        path: '/search/value',
+        name: 'searchvalue',
+        component: SearchValue
+    },
+
+    {
+        path: '/',
+        redirect: '/home'
     }
 ]

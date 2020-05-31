@@ -2,14 +2,14 @@
   <!-- 点击分类组件左侧nav导航后显示的详情 -->
   <div class="warp">
     <div class="border">
-      <div class="header-ipt">
+      <div class="header-ipt" @click="goSearch">
         <van-icon name="search" />
         <span class="placeholder">搜索商品,共27908款好物</span>
       </div>
     </div>
-
+ 
     <div class="content">
-      <van-sidebar class="left" @change="change" v-model="activeKey">
+      <van-sidebar class="left" v-model="activeKey">
         <van-sidebar-item
           :title="item.name"
           v-for="item in list"
@@ -18,16 +18,17 @@
         />
       </van-sidebar>
       <div class="right">
+        <!-- {{rightData}} -->
         <img :src="rightData.img" alt />
-        <ul v-if="currentIndex">
+        <ul>
+          <!-- 有些数据没有categoryList 结构不一样,动态改变结构-->
           <li v-for="item in rightData.categoryList" :key="item.id">
-            <!-- {{rightData}}
-            {{item}}-->
             <img :src="item.bannerUrl" alt />
             <p>{{item.name}}</p>
           </li>
         </ul>
-        <ul v-else>
+        <!-- 有些数据没有categoryList 结构不一样,动态改变结构-->
+        <ul>
           <li v-for="item in rightData.subCateList" :key="item.id">
             <img :src="item.wapBannerUrl" alt />
             <p>{{item.name}}</p>
@@ -42,30 +43,34 @@ export default {
   name: "Category",
   data() {
     return {
+      //左侧navUI库自带属性
       activeKey: 0,
+      //左侧nav的数据
       list: [],
-      rightData: {},
-      currentIndex: 0
+      //右侧详情的数据
+      rightData: {}
     };
   },
   mounted() {
+    //获取左侧nav数据
     this.reqList();
+    //获取右侧详情数据
     this.reqRightData();
   },
   methods: {
+    //获取左侧nav数据
     async reqList() {
       const result = await this.$store.dispatch("getCategoryList");
       this.list = this.$store.state.Category.categoryList.categoryL1List;
-    },
+    }, //获取右侧详情数据
+
     async reqRightData() {
       const result = await this.$store.dispatch("getRightData");
+      this.rightData = this.$store.state.Category.rightData;
     },
-    change(value) {
-      if(value>=4){
-        this.currentIndex=0
-      }else{
-        this.currentIndex=1
-      }
+    //去搜素页面
+    goSearch(){
+      this.$router.push('/search')
     }
   },
   watch: {
@@ -83,34 +88,21 @@ export default {
 };
 </script>
 <style lang='less' rel='stylesheet/less' scoped>
-/* .van-sidebar {
-  .van-sidebar-item--select > van-sidebar-item__text {
-    display: inline;
-    color: red;
-    // width: 80px;
-  }
-} */
-/* .left {
-  // display:inline-block;
-  float: left;
-}
-.right {
-  float: right;
-  // width: 290px;
-} */
-
 .border {
+  background-color: white;
+  position: fixed;
   padding-bottom: 5px;
+  width: 100%;
+  z-index: 1;
   border-bottom: 1px solid #ccc;
   .header-ipt {
-    // border-bottom: 1px solid red;
-    width: 80%;
+    width: 100%;
     margin: 10px auto;
     padding-bottom: 10px;
     text-align: center;
     .search {
-      display: block;
-      margin-top: 10px;
+      // display: block;
+      // margin-top: 10px;
     }
     background-color: #ededed;
     padding: 5px 14px;
@@ -119,7 +111,9 @@ export default {
   }
 }
 .content {
+  padding-top: 56px;
   display: flex;
+
   .right {
     // flex: 1;
     width: 290.2px;

@@ -18,12 +18,23 @@ export default {
       active: "/"
     };
   },
-  watch:{
-    active(){
-    this.$router.push({ path: this.active})
+  //这是为了解决刷新后不能停留在当前位置
+  mounted() {
+    const a = JSON.parse(localStorage.getItem("route"));
+    if (!a) return;
+    this.$router.push(`${a}`);
+    this.active = a;
+  },
+  //当路由发生改变的时候,跳转至目标页面,并且存入localStorage中
+  watch: {
+    active() {
+      this.$router.push({ path: this.active });
+      localStorage.setItem("route", JSON.stringify(this.active));
     }
   }
 };
 </script>
 <style lang='less' rel='stylesheet/less'>
 </style>
+
+ 

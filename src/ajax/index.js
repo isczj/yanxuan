@@ -1,5 +1,5 @@
 import mockAjax from './mockAjax'
-import ajax from './ajax'
+import { ajax1, ajax2 } from './ajax'
 //首页数据
 export const reqHome = () => mockAjax.get('/home')
 // 获取nav
@@ -14,11 +14,13 @@ export const reqCateLists = () => mockAjax.get('/cateLists')
 
 
 //值得买真实接口
-export const reqPurchaseTop = () => ajax.get('/know/navWap.json')
+export const reqPurchaseTop = () => ajax1.get('/know/navWap.json')
 
 //请求值得买瀑布流数据
-export const reqWaterfallData = (page) => ajax.get(`/find/recAuto.json?page=${page}&size=2`)
+export const reqWaterfallData = (page) => ajax1.get(`/find/recAuto.json?page=${page}&size=2`)
 
+//请求搜素的数据
+export const reqSearchData = (params) => ajax2.get(`/search/search.json?${params}`)
 
 
 

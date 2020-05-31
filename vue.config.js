@@ -7,6 +7,10 @@ module.exports = {
       '/topic/v1': {
         target: 'https://m.you.163.com',
         changeOrigin: true
+      },
+      '/xhr': {
+        target: 'https://m.you.163.com',
+        changeOrigin: true
       }
     }
   },
