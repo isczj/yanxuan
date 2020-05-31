@@ -92,7 +92,7 @@ export default {
     this.$refs.jingdutiao.style.width=(bili*100)+'%'
   },
   mounted() {
-    //获取导航栏数据
+    //获取导航栏数据  
     this.getNavList();
     // 获取瀑布流数据
     this.getWaterfall();
