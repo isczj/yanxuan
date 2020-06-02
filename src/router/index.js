@@ -13,9 +13,32 @@ VueRouter.prototype.replace = function (location, onComplete, onAbort = () => { 
     return originReplace.call(this, location, onComplete, onAbort)
 }
 Vue.use(VueRouter)
-
 const router = new VueRouter({
     mode: 'history',
-    routes
+    routes,
+    //一进来就在顶部
+    scrollBehavior(to, from, savedPosition) {
+        return {
+            x: 0,
+            y: 0
+        }
+    }
 })
+router.beforeEach((to, from, next) => {
+    const targetPath = to.path
+    const token = localStorage.getItem('touken')
+    if (targetPath === '/self') {
+        if (token) {
+            next()
+        } else {
+           alert('请先登录')
+            next('/login?redirect=' + targetPath)
+        }
+    } else {
+        next()
+    }
+
+})
+
+
 export default router

@@ -75,7 +75,9 @@ export default {
 </script>
 <style lang='less' rel='stylesheet/less' scoped>
 .warp {
-  height: 1000px;
+  position: absolute;
+  z-index: 3;
+  height: 100%;
   background-color: #eee;
   .top {
     background-color: white;

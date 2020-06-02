@@ -18,12 +18,12 @@ export default {
       active: "/"
     };
   },
-  //这是为了解决刷新后不能停留在当前位置
+
   mounted() {
-    const a = JSON.parse(localStorage.getItem("route"));
-    if (!a) return;
-    this.$router.push(`${a}`);
-    this.active = a;
+    this.$router.push("/");
+    this.$bus.$on("goHome", tagget => {
+      this.active = tagget;
+    });
   },
   //当路由发生改变的时候,跳转至目标页面,并且存入localStorage中
   watch: {

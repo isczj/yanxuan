@@ -1,5 +1,4 @@
 import { reqHome, reqNavList, reqSearchData } from '../../ajax/index'
-
 const state = {
     homeData: {},
     navList: [],

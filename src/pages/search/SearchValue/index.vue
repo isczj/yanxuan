@@ -8,13 +8,13 @@
         <van-icon class="fangdajing" name="search" />
       </div>
       <div class="header-bottom">
-        <span style="color:red">综合</span>
-        <span>价格</span>
-        <span>分类</span>
+        <span :class="{active:currentIndex==1}" @click="clickSwitchSolt(1)">综合</span>
+        <span :class="{active:currentIndex==2}" @click="clickSwitchSolt(2)">价格</span>
+        <span :class="{active:currentIndex==3}" @click="clickSwitchSolt(3)">分类</span>
       </div>
     </div>
-   
     <div class="content">
+      <SwitchSolt v-if="isShowSwitch" :currentIndex="currentIndex" @clickOk="clickOk" />
       <ul v-for="item in reqInfo" :key="item.id">
         <li>
           <img :src="item.listPicUrl" alt />
@@ -26,6 +26,7 @@
   </div>
 </template>
 <script>
+import SwitchSolt from "./SwitchSolt";
 export default {
   name: "SearchValue",
   data() {
@@ -33,18 +34,40 @@ export default {
     return {
       reqInfo: [],
       value: "",
-      isLoad: false
+      isLoad: false,
+      currentIndex: "1", //默认选中综合,
+      isShowSwitch: false,
+      descSorted: "false"
     };
   },
+  components: {
+    SwitchSolt
+  },
+  //descSorted，false是升序，true是降序
   methods: {
+    //点击切换搜索条件
+    clickSwitchSolt(index) {
+      if (index == 1) {
+        this.isShowSwitch = false;
+        return;
+      }
+      if (this.isShowSwitch == true) {
+        if (this.currentIndex == index) {
+          this.isShowSwitch = false;
+          return;
+        }
+      }
+      this.currentIndex = index;
+      this.isShowSwitch = true;
+    },
     //搜素功能
-   async enter() {
-      if (!this.$refs.ipt.value) return;
-      const value = this.$refs.ipt.value;
-      this.$refs.ipt.value = "";
-      const keyword = value;
+    async enter() {
+      console.log(this.value)
+      console.log( this.$refs.ipt.value)
+      // if (!this.$refs.ipt.value) return;
+      this.value = this.$refs.ipt.value;
       const sortType = 0;
-      const descSorted = false;
+      const descSorted = this.descSorted;
       const categoryId = 0;
       const matchType = 0;
       const floorPrice = -1;
@@ -53,9 +76,9 @@ export default {
       const itemId = 0;
       const stillSearch = false;
       const searchWordSource = 1;
-      const needPopWindow = true;
-      const _stat_search = "userhand";
-      const data = `keyword=${keyword}&sortType=0&descSorted=false&categoryId=0&matchType=0&floorPrice=-1&upperPrice=-1&size=40&itemId=0&stillSearch=false&searchWordSource=1&needPopWindow=true&_stat_search=userhand`;
+      const needPopWindow = "false";
+
+      const data = `keyword=${this.value}&sortType=1&descSorted=${descSorted}&categoryId=0&matchType=0&floorPrice=-1&upperPrice=-1&size=40&itemId=0&stillSearch=false&searchWordSource=1&needPopWindow=false`;
       await this.$store.dispatch("getSearchData", data);
       this.reqInfo = this.$store.state.home.searchData;
     },
@@ -66,6 +89,17 @@ export default {
 
     returnSearch() {
       this.$router.push("/search");
+    },
+    clickOk(value, sort) {
+      this.isShowSwitch = false;
+      if (value === "确定") {
+        if (sort === 1) {
+          this.descSorted = "false";
+        } else {
+          this.descSorted = "true";
+        }
+        this.enter();
+      }
     }
   },
   mounted() {
@@ -77,8 +111,6 @@ export default {
 };
 </script>
 <style lang='less' rel='stylesheet/less' scoped>
-.van-loading {
-}
 .header {
   background-color: white;
   padding: 10px 0;
@@ -113,16 +145,18 @@ export default {
     justify-content: space-around;
     background-color: #fafafa;
     height: 40px;
+    position: relative;
   }
 }
 .content {
   width: 95%;
-  height: 1000px;
+  // height: 1000px;
   margin: 0 auto;
   padding-top: 99px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  overflow: hidden;
   ul {
     width: 48%;
     // height: 200px;
@@ -131,5 +165,9 @@ export default {
       width: 100%;
     }
   }
+}
+
+.active {
+  color: red;
 }
 </style>

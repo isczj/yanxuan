@@ -5,6 +5,7 @@ import ShopCar from '../pages/ShopCar'
 import Self from '../pages/Self'
 import Search from '../pages/search'
 import SearchValue from '../pages/search/SearchValue'
+import Login from '../pages/Login'
 
 
 export default [
@@ -44,6 +45,11 @@ export default [
         path: '/search/value',
         name: 'searchvalue',
         component: SearchValue
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: Login
     },
 
     {

@@ -87,11 +87,11 @@ export default {
   },
   async mounted() {
     // 获取推荐页面数据
-    this.$store.dispatch("getHomeData");
+     this.$store.dispatch("getHomeData");
     // 获取nav
-    this.$store.dispatch("getNavList");
+     this.$store.dispatch("getNavList");
     //获取内容
-    this.$store.dispatch("getLunbotu");
+     this.$store.dispatch("getLunbotu");
   },
   computed: {
     ...mapGetters([

@@ -7,7 +7,7 @@
         <span class="placeholder">搜索商品,共27908款好物</span>
       </div>
     </div>
- 
+
     <div class="content">
       <van-sidebar class="left" v-model="activeKey">
         <van-sidebar-item
@@ -18,7 +18,6 @@
         />
       </van-sidebar>
       <div class="right">
-        <!-- {{rightData}} -->
         <img :src="rightData.img" alt />
         <ul>
           <!-- 有些数据没有categoryList 结构不一样,动态改变结构-->
@@ -69,8 +68,8 @@ export default {
       this.rightData = this.$store.state.Category.rightData;
     },
     //去搜素页面
-    goSearch(){
-      this.$router.push('/search')
+    goSearch() {
+      this.$router.push("/search");
     }
   },
   watch: {
